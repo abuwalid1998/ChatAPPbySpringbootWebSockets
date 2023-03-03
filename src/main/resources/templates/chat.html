@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            let socket = new WebSocket("ws://" + location.host + "/chat");
+            socket.onmessage = function(event) {
+                $("#messages").append("<p>"+  location.hostname+ " : "+ event.data + "</p>");
+            };
+            $("#send").click(function() {
+                let message = $('#message').val();
+                socket.send(message);
+                $("#message").val("");
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="messages"></div>
+<input type="text" id="message">
+<button id="send">Send</button>
+</body>
+</html>
